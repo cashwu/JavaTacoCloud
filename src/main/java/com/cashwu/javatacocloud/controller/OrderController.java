@@ -1,6 +1,7 @@
 package com.cashwu.javatacocloud.controller;
 
 import com.cashwu.javatacocloud.model.TacoOrder;
+import com.cashwu.javatacocloud.repository.OrderRepository;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
@@ -17,6 +18,12 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/orders")
 @SessionAttributes("tacoOrder")
 public class OrderController {
+
+    private OrderRepository orderRepository;
+
+    public OrderController(OrderRepository orderRepository) {
+        this.orderRepository = orderRepository;
+    }
 
     @GetMapping("/current")
     public String orderForm() {
@@ -39,8 +46,9 @@ public class OrderController {
         if (errors.hasErrors()) {
             return "orderForm";
         }
+        orderRepository.save(order);
 
-        log.info("Order submitted: {}", order);
+//        log.info("Order submitted: {}", order);
         sessionStatus.setComplete();
 
         return "redirect:/";
