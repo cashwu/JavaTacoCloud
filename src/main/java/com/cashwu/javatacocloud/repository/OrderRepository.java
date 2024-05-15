@@ -1,8 +1,12 @@
 package com.cashwu.javatacocloud.repository;
 
 import com.cashwu.javatacocloud.model.TacoOrder;
+import jakarta.persistence.criteria.Order;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -11,7 +15,10 @@ import java.util.Optional;
  */
 public interface OrderRepository extends CrudRepository<TacoOrder, Long> {
 
-//    TacoOrder save(TacoOrder tacoOrder);
-//
-//    Optional<TacoOrder> findById(Long id);
+    List<TacoOrder> findTacoOrderByDeliveryZip(String deliveryZip);
+
+    List<TacoOrder> readTacoOrderByDeliveryZipAndPlacedAtBetween(String deliveryZip, Date startDate, Date endDate);
+
+//    @Query("Order o where o.deliveryCity = 'Seattle'")
+//    List<TacoOrder> readTacoOrderByDeliveredInSeattle();
 }
