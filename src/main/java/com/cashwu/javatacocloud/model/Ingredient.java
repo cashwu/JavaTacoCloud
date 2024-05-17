@@ -4,8 +4,8 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.cassandra.core.mapping.PrimaryKey;
-import org.springframework.data.cassandra.core.mapping.Table;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * @author cash.wu
@@ -13,12 +13,12 @@ import org.springframework.data.cassandra.core.mapping.Table;
  */
 @Data
 @AllArgsConstructor
-@Table("ingredients")
+@Document("ingredients")
 @NoArgsConstructor(access = AccessLevel.PRIVATE,
                    force = true)
 public class Ingredient {
 
-    @PrimaryKey
+    @Id
     private String id;
 
     private String name;

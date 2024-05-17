@@ -1,9 +1,11 @@
 spring:
   application:
     name: JavaTacoCloud
-
-  cassandra:
-    keyspace-name: tacocloud
-    schema-action: recreate
-    local-datacenter: datacenter1
-
+  data:
+    mongodb:
+      host:
+      port:
+      username: mongo
+      password:
+      authentication-database: admin
+      database: test

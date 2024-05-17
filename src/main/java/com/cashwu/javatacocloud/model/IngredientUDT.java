@@ -1,9 +1,6 @@
 package com.cashwu.javatacocloud.model;
 
 import lombok.*;
-import org.springframework.data.cassandra.core.mapping.PrimaryKey;
-import org.springframework.data.cassandra.core.mapping.Table;
-import org.springframework.data.cassandra.core.mapping.UserDefinedType;
 
 /**
  * @author cash.wu
@@ -13,7 +10,6 @@ import org.springframework.data.cassandra.core.mapping.UserDefinedType;
 @RequiredArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PRIVATE,
                    force = true)
-@UserDefinedType("ingredient")
 public class IngredientUDT {
 
     private final String name;
