@@ -1,8 +1,10 @@
 package com.cashwu.javatacocloud.controller;
 
+import com.cashwu.javatacocloud.model.MyUser;
 import com.cashwu.javatacocloud.model.TacoOrder;
 import com.cashwu.javatacocloud.repository.OrderRepository;
 import jakarta.validation.Valid;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,11 +44,17 @@ public class OrderController {
     @PostMapping
     public String processOrder(@Valid TacoOrder order,
                                Errors errors,
-                               SessionStatus sessionStatus) {
+                               SessionStatus sessionStatus,
+                               @AuthenticationPrincipal MyUser user) {
         if (errors.hasErrors()) {
             return "orderForm";
         }
+
+        order.setUser(user);
+
         orderRepository.save(order);
+
+
 
 //        log.info("Order submitted: {}", order);
         sessionStatus.setComplete();

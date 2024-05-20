@@ -2,11 +2,13 @@ package com.cashwu.javatacocloud.controller;
 
 import com.cashwu.javatacocloud.model.Ingredient;
 import com.cashwu.javatacocloud.model.Ingredient.Type;
+import com.cashwu.javatacocloud.model.MyUser;
 import com.cashwu.javatacocloud.model.Taco;
 import com.cashwu.javatacocloud.model.TacoOrder;
 import com.cashwu.javatacocloud.repository.IngredientRepository;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -65,7 +67,12 @@ public class DesignTacoController {
     }
 
     @GetMapping
-    public String showDesignForm() {
+    public String showDesignForm(Authentication authentication) {
+
+        MyUser user = (MyUser) authentication.getPrincipal();
+
+        System.out.println("username -- " + user.getUsername());
+
         return "design";
     }
 
