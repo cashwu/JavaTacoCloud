@@ -6,6 +6,7 @@ import com.cashwu.javatacocloud.repository.IngredientRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -20,6 +21,7 @@ public class WebConfig implements WebMvcConfigurer {
   }
 
   @Bean
+  @Profile({"dev", "!prod"})
   public CommandLineRunner dataLoader(IngredientRepository repo) {
     return args -> {
       repo.deleteAll(); // TODO: Quick hack to avoid tests from stepping on each other with constraint violations

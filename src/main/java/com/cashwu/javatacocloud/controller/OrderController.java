@@ -1,11 +1,14 @@
 package com.cashwu.javatacocloud.controller;
 
+import com.cashwu.javatacocloud.bean.OrderProps;
 import com.cashwu.javatacocloud.model.MyUser;
 import com.cashwu.javatacocloud.model.TacoOrder;
 import com.cashwu.javatacocloud.repository.OrderRepository;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,16 +18,34 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.List;
+
 @Slf4j
 @Controller
 @RequestMapping("/orders")
 @SessionAttributes("tacoOrder")
 public class OrderController {
 
-    private OrderRepository orderRepository;
+    private final OrderRepository orderRepository;
+    private final OrderProps orderProps;
 
-    public OrderController(OrderRepository orderRepository) {
+    public OrderController(OrderRepository orderRepository,
+                           OrderProps orderProps) {
         this.orderRepository = orderRepository;
+        this.orderProps = orderProps;
+    }
+
+    @GetMapping
+    public String ordersForUser(@AuthenticationPrincipal MyUser myUser, Model model) {
+
+        PageRequest pageRequest = PageRequest.of(0,
+                                                 orderProps.getPageSize());
+
+        List<TacoOrder> orders = orderRepository.findByUserOrderByPlacedAtDesc(myUser, pageRequest);
+
+        model.addAttribute("orders",
+                           orders);
+        return "orderList";
     }
 
     @GetMapping("/current")

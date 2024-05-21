@@ -13,3 +13,6 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+taco:
+  orders:
+    page-size: 10
