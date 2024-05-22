@@ -9,10 +9,10 @@ spring:
     username: postgres
     password: pw-1234
 
-  jpa:
-    show-sql: true
-    hibernate:
-      ddl-auto: update
+#  jpa:
+#    show-sql: true
+#    hibernate:
+#      ddl-auto: update
 taco:
   orders:
     page-size: 10

@@ -1,0 +1,42 @@
+### GET request to example server
+GET https://examples.http-client.intellij.net/get
+    ?generated-in=IntelliJ IDEA
+
+###
+
+@host=http://localhost:8080
+
+
+###
+
+GET {{host}}
+
+###
+
+GET {{host}}/api/tacos?recent
+
+
+###
+
+GET {{host}}/api/tacos/1
+
+
+###
+
+POST {{host}}/api/tacos
+Content-Type: application/json
+
+{
+  "name": "aa12345",
+  "ingredients": [
+    {
+      "id": "FLTO",
+      "name": "Flour Tortilla",
+      "type": "WRAP"
+    },
+    {
+      "id": "GRBF",
+      "name": "Ground Beef",
+      "type": "PROTEIN"
+    }]
+}

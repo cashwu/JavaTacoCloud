@@ -2,9 +2,13 @@ package com.cashwu.javatacocloud;
 
 import com.cashwu.javatacocloud.model.MyUser;
 import com.cashwu.javatacocloud.repository.UserRepository;
+import jakarta.persistence.Entity;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -43,11 +47,13 @@ public class SecurityConfig {
         return http
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/design", "/orders").hasRole("USER");
+//                    auth.requestMatchers("/api/tacos/**").permitAll();
                     auth.anyRequest().permitAll();
                 })
                 .formLogin(formLogin -> {
                     formLogin.loginPage("/login");
                 })
+                .csrf(AbstractHttpConfigurer::disable)
                 .build();
     }
 
