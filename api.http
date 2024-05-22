@@ -40,3 +40,20 @@ Content-Type: application/json
       "type": "PROTEIN"
     }]
 }
+
+
+###
+
+GET {{host}}/data-api
+
+###
+
+GET {{host}}/data-api/ingredients
+
+###
+
+GET {{host}}/data-api/ingredients/FLTO
+
+###
+
+GET {{host}}/data-api/tacos

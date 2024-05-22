@@ -8,11 +8,17 @@ spring:
     url: jdbc:postgresql://localhost:5432/postgres
     username: postgres
     password: pw-1234
+  data:
+    rest:
+      base-path: /data-api
 
 #  jpa:
 #    show-sql: true
 #    hibernate:
 #      ddl-auto: update
+
+
 taco:
   orders:
     page-size: 10
+
