@@ -7,6 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -18,6 +19,11 @@ public class WebConfig implements WebMvcConfigurer {
     registry.addViewController("/").setViewName("home");
     registry.addViewController("/login");
 
+  }
+
+  @Bean
+  public RestTemplate getRestTemplate() {
+    return new RestTemplate();
   }
 
 //  @Bean
