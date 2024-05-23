@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
 import org.springframework.jms.annotation.JmsListener;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
 /**
@@ -17,10 +18,16 @@ public class OrderListener {
 
     private static final Logger log = LoggerFactory.getLogger(OrderListener.class);
 
-    @JmsListener(destination = "tacocloud.order.queue")
-    public void onOrderReceived(TacoOrder order) {
+//    @JmsListener(destination = "tacocloud.order.queue")
+//    public void onOrderReceived(TacoOrder order) {
+//
+//        log.info("<-- Order received: {}",
+//                 order);
+//    }
 
-        log.info("<-- Order received: {}",
-                 order);
+    @KafkaListener(topics = "tacocloud.order.queue", groupId = "group1")
+    public void handle(TacoOrder tacoOrder) {
+
+        log.info("<-- Received order: {}", tacoOrder);
     }
 }

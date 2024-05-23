@@ -1,16 +1,13 @@
 package com.cashwu.javatacocloud;
 
-import com.cashwu.javatacocloud.model.Ingredient;
-import com.cashwu.javatacocloud.model.Ingredient.Type;
 import com.cashwu.javatacocloud.model.TacoOrder;
-import com.cashwu.javatacocloud.repository.IngredientRepository;
 import jakarta.jms.Destination;
 import org.apache.activemq.artemis.jms.client.ActiveMQQueue;
-import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.jms.support.converter.MappingJackson2MessageConverter;
+import org.springframework.kafka.support.converter.RecordMessageConverter;
+import org.springframework.kafka.support.converter.StringJsonMessageConverter;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -50,6 +47,11 @@ public class WebConfig implements WebMvcConfigurer {
         converter.setTypeIdMappings(typeIdMappings);
 
         return converter;
+    }
+
+    @Bean
+    public RecordMessageConverter jsonConverter() {
+        return new StringJsonMessageConverter();
     }
 
     //  @Bean
