@@ -4,6 +4,7 @@ import com.cashwu.javatacocloud.bean.OrderProps;
 import com.cashwu.javatacocloud.model.MyUser;
 import com.cashwu.javatacocloud.model.TacoOrder;
 import com.cashwu.javatacocloud.repository.OrderRepository;
+import com.cashwu.javatacocloud.service.OrderMessagingService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -28,20 +29,25 @@ public class OrderController {
 
     private final OrderRepository orderRepository;
     private final OrderProps orderProps;
+    private final OrderMessagingService orderMessagingService;
 
     public OrderController(OrderRepository orderRepository,
-                           OrderProps orderProps) {
+                           OrderProps orderProps,
+                           OrderMessagingService orderMessagingService) {
         this.orderRepository = orderRepository;
         this.orderProps = orderProps;
+        this.orderMessagingService = orderMessagingService;
     }
 
     @GetMapping
-    public String ordersForUser(@AuthenticationPrincipal MyUser myUser, Model model) {
+    public String ordersForUser(@AuthenticationPrincipal MyUser myUser,
+                                Model model) {
 
         PageRequest pageRequest = PageRequest.of(0,
                                                  orderProps.getPageSize());
 
-        List<TacoOrder> orders = orderRepository.findByUserOrderByPlacedAtDesc(myUser, pageRequest);
+        List<TacoOrder> orders = orderRepository.findByUserOrderByPlacedAtDesc(myUser,
+                                                                               pageRequest);
 
         model.addAttribute("orders",
                            orders);
@@ -75,10 +81,10 @@ public class OrderController {
 
         orderRepository.save(order);
 
-
-
-//        log.info("Order submitted: {}", order);
+        //        log.info("Order submitted: {}", order);
         sessionStatus.setComplete();
+
+        orderMessagingService.sendOrder(order);
 
         return "redirect:/";
     }

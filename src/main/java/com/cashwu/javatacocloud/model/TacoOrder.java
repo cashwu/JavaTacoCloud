@@ -1,5 +1,6 @@
 package com.cashwu.javatacocloud.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import org.hibernate.validator.constraints.CreditCardNumber;
 
 @Entity
 @Data
-public class TacoOrder {
+public class TacoOrder implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

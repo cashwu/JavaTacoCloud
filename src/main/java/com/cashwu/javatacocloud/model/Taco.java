@@ -1,4 +1,5 @@
 package com.cashwu.javatacocloud.model;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -12,7 +13,7 @@ import org.springframework.data.rest.core.annotation.RestResource;
 @Entity
 @Data
 @RestResource(rel = "tacos", path = "tacos")
-public class Taco {
+public class Taco implements Serializable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)

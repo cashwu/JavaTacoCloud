@@ -63,3 +63,18 @@ GET {{host}}/data-api/tacos
 
 GET {{host}}/api/tacos/ingredient/FLTO
 
+###
+
+
+GET {{host}}/api/ingredients
+
+###
+
+POST {{host}}/api/ingredients
+Content-Type: application/json
+
+{
+  "id": "FISH",
+  "name": "Stinky Fish",
+  "type": "PROTEIN"
+}

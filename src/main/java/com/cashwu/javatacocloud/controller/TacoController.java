@@ -2,7 +2,10 @@ package com.cashwu.javatacocloud.controller;
 
 import com.cashwu.javatacocloud.model.Ingredient;
 import com.cashwu.javatacocloud.model.Taco;
+import com.cashwu.javatacocloud.model.TacoOrder;
 import com.cashwu.javatacocloud.repository.TacoRepository;
+import com.cashwu.javatacocloud.service.OrderReceiver;
+import jakarta.jms.JMSException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
@@ -33,10 +36,14 @@ public class TacoController {
     private final TacoRepository tacoRepository;
     private final RestTemplate restTemplate;
 
+    private final OrderReceiver orderReceiver;
+
     public TacoController(TacoRepository tacoRepository,
-                          RestTemplate restTemplate) {
+                          RestTemplate restTemplate,
+                          OrderReceiver orderReceiver) {
         this.tacoRepository = tacoRepository;
         this.restTemplate = restTemplate;
+        this.orderReceiver = orderReceiver;
     }
 
     @GetMapping(params = "recent")
@@ -106,5 +113,11 @@ public class TacoController {
 
         return responseEntity.getBody();
 
+    }
+
+    @GetMapping("message")
+    public TacoOrder message() throws JMSException {
+
+        return orderReceiver.receiveOrder();
     }
 }
